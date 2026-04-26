@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan Amzed & Intan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&family=Amiri&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    text-align: center;
+}
+
+.cover {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200') center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 0.8s;
+}
+
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+.btn {
+    display:inline-block;
+    background: gold;
+    color: black;
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.section {
+    padding: 40px 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    margin: 15px auto;
+    padding: 20px;
+    max-width: 500px;
+    border-radius: 20px;
+}
+
+.arab {
+    font-size: 24px;
+    direction: rtl;
+    font-family: 'Amiri', serif;
+}
+
+.arti {
+    font-style: italic;
+}
+
+.countdown {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+    <h1>Undangan Pernikahan</h1>
+    <h2>Amzed & Intan</h2>
+    <p id="guestName"></p>
+    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" style="display:none;">
+
+<!-- BISMILLAH -->
+<div class="section">
+    <p class="arab">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+    <p class="arti">Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang</p>
+</div>
+
+<!-- AYAT -->
+<div class="section">
+    <p class="arab">
+    وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا
+    </p>
+    <p class="arti">(QS. Ar-Rum: 21)</p>
+</div>
+
+<!-- NAMA -->
+<div class="section">
+    <h2>Amzed & Intan</h2>
+</div>
+
+<!-- PROFIL -->
+<div class="card">
+    <h3>Amzed</h3>
+    <p>Bapak M. Nurlyan Rais & Ibu Masitoh</p>
+</div>
+
+<div class="card">
+    <h3>Intan</h3>
+    <p>Bapak Suherman (Alm.) & Ibu Anis (Almh.)</p>
+</div>
+
+<!-- AKAD -->
+<div class="card">
+    <h2>Akad Nikah</h2>
+    <p>07 Juni 2026</p>
+    <p>09.00 - 10.30 WIB</p>
+
+    <a href="https://www.google.com/maps?q=SD+Islam+Terpadu+(SDIT)+Rahmaniyah,+Depok" target="_blank" class="btn">📍 Lokasi</a>
+
+    <a href="https://www.google.com/maps/dir/?api=1&destination=SDIT+Rahmaniyah+Depok" 
+    target="_blank" class="btn" style="background:white;color:black;">🚗 Navigasi</a>
+</div>
+
+<!-- RESEPSI -->
+<div class="card">
+    <h2>Resepsi</h2>
+    <p>07 Juni 2026</p>
+    <p>11.00 - 16.00 WIB</p>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="section">
+    <h2>Menuju Hari Bahagia</h2>
+    <div id="countdown" class="countdown"></div>
+</div>
+
+<!-- HADIAH -->
+<div class="card">
+    <h2>Hadiah Pernikahan</h2>
+
+    <div style="background:white;color:black;padding:15px;border-radius:15px;">
+        <p><b>Bank Permata</b></p>
+        <p id="rekening">1232225110</p>
+        <p>a.n. Intan</p>
+
+        <button class="btn" onclick="copyRek()">Copy</button>
+    </div>
+</div>
+
+</div>
+
+<!-- AUDIO -->
+<audio id="music" loop muted>
+<source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3">
+</audio>
+
+<script>
+// buka undangan
+function openInvite() {
+    document.getElementById("cover").style.display = "none";
+    document.getElementById("content").style.display = "block";
+
+    let music = document.getElementById("music");
+    music.muted = false;
+    music.play();
+}
+
+// nama tamu
+const params = new URLSearchParams(window.location.search);
+const to = params.get("to");
+if (to) document.getElementById("guestName").innerText = "Kepada Yth. " + to;
+
+// countdown FIX
+const target = new Date("2026-06-07T11:00:00").getTime();
+
+setInterval(function() {
+    const now = new Date().getTime();
+    const gap = target - now;
+
+    if (gap < 0) {
+        document.getElementById("countdown").innerHTML = "Acara sedang berlangsung 🎉";
+        return;
+    }
+
+    const d = Math.floor(gap / (1000*60*60*24));
+    const h = Math.floor((gap / (1000*60*60)) % 24);
+    const m = Math.floor((gap / (1000*60)) % 60);
+    const s = Math.floor((gap / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        d + " hari " + h + " jam " + m + " menit " + s + " detik";
+}, 1000);
+
+// copy rekening
+function copyRek() {
+    let rek = document.getElementById("rekening").innerText;
+    navigator.clipboard.writeText(rek);
+    alert("Nomor rekening berhasil disalin 👍");
+}
+</script>
+
+</body>
+</html>
